@@ -19,28 +19,29 @@ public class GlobalExceptionHandler {
 
 @ExceptionHandler(MethodArgumentNotValidException.class)
 @ResponseStatus(HttpStatus.UNAUTHORIZED)
-public ResponseEntity<Map<String,String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
-    	Map<String,String>m=new HashMap<>();
-    	List<String> fieldOrder = Arrays.asList("companyname","email","mobileNumber","password");
-    	boolean allFieldsEmpty = fieldOrder.stream().allMatch(field ->
-    	         ex.getBindingResult().getFieldErrors().stream()
-    	          .anyMatch(error -> error.getField().equals(field) && (error.getRejectedValue() == null || error.getRejectedValue().toString().trim().isEmpty())));
-    		
-    	if(allFieldsEmpty) {
-    	    m.put("message", "All Fields are required");
-    	    return new ResponseEntity<>(m, HttpStatus.UNAUTHORIZED);
-    	    }
-    	    
-    for(String field:fieldOrder) {
-     for(FieldError firstError:ex.getBindingResult().getFieldErrors()) {
-           if(firstError.getField().equals(field)) {
-        	 m.put(field,firstError.getDefaultMessage());
-        	 return new ResponseEntity<>(m,HttpStatus.UNAUTHORIZED);
-           }
-     }
-    }
-      return new ResponseEntity<>(m, HttpStatus.UNAUTHORIZED);
-    	}
+public List<FieldError> handleValidationExceptions(MethodArgumentNotValidException ex) {
+//    	Map<String,String>m=new HashMap<>();
+//    	List<String> fieldOrder = Arrays.asList("companyname","email","mobileNumber","password");
+//    	boolean allFieldsEmpty = fieldOrder.stream().allMatch(field ->
+//    	         ex.getBindingResult().getFieldErrors().stream()
+//    	          .anyMatch(error -> error.getField().equals(field) && (error.getRejectedValue() == null || error.getRejectedValue().toString().trim().isEmpty())));
+//    		
+//    	if(allFieldsEmpty) {
+//    	    m.put("message", "All Fields are required");
+//    	    return new ResponseEntity<>(m, HttpStatus.UNAUTHORIZED);
+//    	    }
+//    	    
+//    for(String field:fieldOrder) {
+//     for(FieldError firstError:ex.getBindingResult().getFieldErrors()) {
+//           if(firstError.getField().equals(field)) {
+//        	 m.put(field,firstError.getDefaultMessage());
+//        	 return new ResponseEntity<>(m,HttpStatus.UNAUTHORIZED);
+//           }
+//     }
+//    }
+//      return new ResponseEntity<>(m, HttpStatus.UNAUTHORIZED);
+	return ex.getBindingResult().getFieldErrors();
+ 	}
 @ExceptionHandler(CustomException.class)
 public ResponseEntity<Map<String,String>> handleFieldValidationException(CustomException ex) {
     Map<String,String>m = new HashMap<>();

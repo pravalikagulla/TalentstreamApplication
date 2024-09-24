@@ -13,8 +13,10 @@ public interface RecruiterRepository extends JpaRepository<Recruiter, Integer>{
 	
   // this is for registration
 	boolean existsByEmail(String email);
-	// this is for login
+	
 	Optional<Recruiter>findByEmail(String email);
+	
+	
 
 	
 

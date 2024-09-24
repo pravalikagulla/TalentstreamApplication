@@ -9,7 +9,7 @@ import jakarta.validation.Payload;
 
 
 
-@Target({ElementType.FIELD, ElementType.METHOD, ElementType.TYPE})
+@Target({ElementType.FIELD,ElementType.PARAMETER, ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = UniqueEmailValidation.class) 
 

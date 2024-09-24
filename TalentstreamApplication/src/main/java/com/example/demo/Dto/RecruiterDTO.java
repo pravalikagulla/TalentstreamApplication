@@ -1,15 +1,23 @@
 package com.example.demo.Dto;
 
+import com.example.demo.validation.CompanyNameValidator;
+import com.example.demo.validation.MobileNumberValidator;
+import com.example.demo.validation.PasswordValidator;
+import com.example.demo.validation.UniqueEmailValidator;
 
 public class RecruiterDTO {
 	
-	private String companyname;
+@CompanyNameValidator	
+private String companyname;
 
-	private String email;
-	
-	private String mobileNumber;
+@UniqueEmailValidator
+private String email;
 
-	 private String password;
+@MobileNumberValidator
+private String mobileNumber;
+
+@PasswordValidator
+private String password;
 
 	public RecruiterDTO(String companyname, String email, String mobileNumber, String password) {
 		this.companyname = companyname;
